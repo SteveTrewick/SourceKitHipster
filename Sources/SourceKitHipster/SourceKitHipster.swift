@@ -3,7 +3,7 @@ import Foundation
 import CSourceKitD
 
 
-public struct SouceKitHipster {
+public class SouceKitHipster {
     
     
     let sdkpath = PlatformConfig.shared.sdk
@@ -26,9 +26,11 @@ public struct SouceKitHipster {
     }
     
     
-    public func shutdown() {
+    deinit {
+        // the only reason ths is a class is so we can do this ...
         dylib.sourcekitd_shutdown()
     }
+    
     
     private func error ( _ value: String ) -> String {
         "{\"error\" : \"\(value)\"}"
