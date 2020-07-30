@@ -22,8 +22,6 @@ Or like this if you want to work directly with the file system and use only the 
     let skh = SKHipster()
 
 
-Note that if you do this the convenience APIs will not work.
-
 
 ## Convenience APIs
 
