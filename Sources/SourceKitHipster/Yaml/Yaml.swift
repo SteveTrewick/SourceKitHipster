@@ -35,6 +35,8 @@ public enum SKRequestUID : String {
 
 public class Yaml {
    
+    public init(){}
+    
     public var string = ""
     
     private func add ( key: SKKey, value: String )  -> Self {
