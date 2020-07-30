@@ -8,6 +8,7 @@ public enum SKKey : String {
     case codecompleteopts     = "key.codecomplete.options"
     case compilerargs         = "key.compilerargs"
     case name                 = "key.name"
+    case modulename           = "key.modulename"
     case offset               = "key.offset"
     case request              = "key.request"
     case sourcefile           = "key.sourcefile"
@@ -55,6 +56,10 @@ public class Yaml {
     
     
     public func name (_ value: String ) -> Self {
+        add(key: .name, value: quoted(value))
+    }
+    
+    public func moduleName ( _ value: String ) -> Self {
         add(key: .name, value: quoted(value))
     }
     
