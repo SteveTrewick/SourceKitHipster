@@ -2,14 +2,10 @@ import XCTest
 @testable import SourceKitHipster
 
 final class SourceKitHipsterTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(SourceKitHipster().text, "Hello, World!")
-    }
-
-    static var allTests = [
-        ("testExample", testExample),
-    ]
+    
+    // currently there are no unit tests,
+    // I debugged it all with print statements,
+    // and I'd do it again I tells ya.
+    
+    static var allTests : [(String, (SourceKitHipsterTests) -> () -> ())] = []
 }
