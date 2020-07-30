@@ -72,7 +72,6 @@ public class Yaml {
         add(key: .offset, value: String(value))
     }
 
-    
     public func request ( _ value: SKRequestUID ) -> Self {
         add(key: .request, value: value.rawValue)
     }
@@ -81,12 +80,10 @@ public class Yaml {
         add(key: .sourcefile, value: quoted(value))
     }
     
-    
     public func sourceText ( _ value: String ) -> Self {
         add(key: .sourcetext, value: quoted(value))
     }
 
-    
     public func usr ( _ value: String ) -> Self {
         add(key: .usr, value: quoted(value))
     }
