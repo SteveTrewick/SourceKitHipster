@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "SourceKitHipster",
+    platforms: [
+        .macOS(.v10_14),
+    ],
     products: [
         .library(
             name:     "SourceKitHipster",
