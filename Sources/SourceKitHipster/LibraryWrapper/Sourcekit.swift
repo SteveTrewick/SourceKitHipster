@@ -20,9 +20,9 @@ internal struct SourceKit {
     let sourcekitd_response_description_dump     : @convention(c) (sourcekitd_response_t) -> ()
     let sourcekitd_request_description_dump      : @convention(c) (sourcekitd_object_t) -> ()
     
-    init?() {
+    init() {
         
-        guard let handle = dlopen(path, RTLD_LAZY) else { return nil }
+        guard let handle = dlopen(path, RTLD_LAZY) else { fatalError("dlopen can't load : \(PlatformConfig.shared.sourcekitd)") }
         self.handle      = handle
     
         func load<T>(_ symbol: String) -> T {

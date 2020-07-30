@@ -14,7 +14,7 @@ public class SKHipster {
     
     private init (file: URL) {
         self.file   = file
-        self.dylib  = SourceKitHipster.SourceKit()! // FIXME:
+        self.dylib  = SourceKitHipster.SourceKit()
         dylib.sourcekitd_initialize()
     }
     
