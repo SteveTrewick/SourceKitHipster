@@ -49,15 +49,15 @@ public class Yaml {
     
     
     public func codecompleteOpts ( _ value: [String] ) -> Self {
-        add(key: .codecompleteopts, value: "[\(value.map {"\"\($0)\""}.joined(separator: ","))]")
+        add(key: .codecompleteopts, value: "[\(value.map { quoted($0) }.joined(separator: ","))]")
     }
     
     public func compilerArgs ( _ value: [String] ) -> Self {
-        add(key: .compilerargs, value: "[\(value.map {"\"\($0)\""}.joined(separator: ","))]")
+        add(key: .compilerargs, value: "[\(value.map { quoted($0) }.joined(separator: ","))]")
     }
     
     public func expectedTypes( _ value: [String] ) -> Self {
-        add(key: .expectedtypes, value: "[\(value.map {"\"\($0)\""}.joined(separator: ","))]")
+        add(key: .expectedtypes, value: "[\(value.map { quoted($0) }.joined(separator: ","))]")
     }
     
     public func name (_ value: String ) -> Self {
