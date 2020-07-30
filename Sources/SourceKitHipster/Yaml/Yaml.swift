@@ -7,6 +7,7 @@ public enum SKKey : String {
     
     case codecompleteopts     = "key.codecomplete.options"
     case compilerargs         = "key.compilerargs"
+    case expectedtypes        = "key.expectedtypes"
     case name                 = "key.name"
     case modulename           = "key.modulename"
     case offset               = "key.offset"
@@ -28,6 +29,7 @@ public enum SKRequestUID : String {
     case indexsource           = "source.request.indexsource"
     case protocol_version      = "source.request.protocol_version"
     case compiler_version      = "source.request.compiler_version"
+    case expression_type       = "source.request.expression.type"
 }
 
 
@@ -54,6 +56,9 @@ public class Yaml {
         add(key: .compilerargs, value: "[\(value.map {"\"\($0)\""}.joined(separator: ","))]")
     }
     
+    public func expectedTypes( _ value: [String] ) -> Self {
+        add(key: .expectedtypes, value: "[\(value.map {"\"\($0)\""}.joined(separator: ","))]")
+    }
     
     public func name (_ value: String ) -> Self {
         add(key: .name, value: quoted(value))
