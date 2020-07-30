@@ -6,24 +6,21 @@ import PackageDescription
 let package = Package(
     name: "SourceKitHipster",
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "SourceKitHipster",
+            name:     "SourceKitHipster",
             targets: ["SourceKitHipster"]),
     ],
     dependencies: [
-        // this is just a modmao tha exposes the sourcekitd headers so we can the
-        // appropriate types imported.
+        // this is just a modmap tha exposes the sourcekitd headers so we can
+        // import the appropriate types.
         .package(url: "https://github.com/SteveTrewick/CSourceKitD.git", from: "1.0.2")
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "SourceKitHipster",
+            name        : "SourceKitHipster",
             dependencies: ["CSourceKitD"]),
         .testTarget(
-            name: "SourceKitHipsterTests",
+            name        : "SourceKitHipsterTests",
             dependencies: ["SourceKitHipster"]),
     ]
 )
