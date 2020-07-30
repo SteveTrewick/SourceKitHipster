@@ -7,17 +7,16 @@ to the user with a set of convenience APIs that work on a string and with a more
 It is designed to be a lightweight tool for talking to ```sourcekitd``` from Swift and not as a replacement for
 a more complete (and better tested) tool like [SourceKitten](https://github.com/jpsim/SourceKitten).
 
-All of the output from SourceKit Hipster is in JSON basically because we all know by now what to do when see a JSON
+All of the output from SourceKit Hipster is in JSON basically because we all know by now what to do when we see a JSON
 payload.
 
-Import and use it like this for the convenience APIs if you only want to analyze code you have in a string and are
-likely to do multiple operations on it.
+Import and use it like this for the convenience APIs for small bits of code :
 
     import SourceKitHipster 
     let skh = SKHipster(source: "let a = 42")
 
 
-Or like this if you want to work directly with the file system and use only the YAML APis.
+Or like this if you want to work directly with the file system and use only the YAML APIs :
 
     import SourceKitHipster 
     let skh = SKHipster()
@@ -29,12 +28,15 @@ Note that if you do this the convenience APIs will not work.
 ## Convenience APIs
 
 The convenience APIs are basically designed for feeding a syntax highlighter working on small chunks of code.
-In fact SourceKit Hipster is a component of syntax highlighter that I'm currently building.
+In fact SourceKit Hipster is a component of a syntax highlighter that I'm currently building.
 
 **```public func syntaxMap() -> String```**
 
-Executes a ```source.request.editor.open``` query and returns a JSON response containing a basic list of tokens 
-and their locations in the source code as well as a second dictionary with more detailed semantic information.
+Executes a ```source.request.editor.open``` query and returns a JSON dictionary in response. 
+
+```key.syntaxmap``` containins a basic list of tokens and their locations in the source code. 
+```key.substructure``` contains  more detailed semantic information.
+
 
 For the short code segment above this yields the following result :
 
@@ -76,8 +78,8 @@ For the short code segment above this yields the following result :
 
 Executes a ```source.request.cursorinfo``` query and returns the results in JSON.
 
-Cursor info requests return even richer semantic data than the ```substrucure``` dictionary from ```syntaxMap```
-for example ```skh.cursor(offset: 4)``` yields the following about our ```a``` variable :
+Cursor info requests return richer semantic data than the ```substrucure``` dictionary from ```syntaxMap```.
+For example ```skh.cursor(offset: 4)``` yields the following about our ```a``` variable :
 
     {
       "key.kind": "source.lang.swift.decl.var.global",
@@ -93,7 +95,7 @@ for example ```skh.cursor(offset: 4)``` yields the following about our ```a``` v
     }
 
 Importantly if you are building a highlighter that mimics your XCode styling, ```cursor``` provides one bit of information 
-that I haven't noticed showing up anywhere else. If we run it on (e.g.) ```"print("hello")"``` we get the following from ```cursor(offset: 0)```
+that I haven't noticed showing up anywhere else. If we run it on (e.g.) ```print("hello")``` we get the following from ```cursor(offset: 0)```
 
     {
       "key.kind": "source.lang.swift.ref.function.free",
@@ -116,14 +118,28 @@ that I haven't noticed showing up anywhere else. If we run it on (e.g.) ```"prin
       ]
     }
 
-Here we have a ```key.is_system``` key which lets us know whether a function, method or 
-type is one we defined or if it is provided by 'the system'. In XCode theme parlance this is 'Project' vs 'Other'.
+Here we have a ```key.is_system``` key which lets us know that a function, method or 
+type is one provided by the toolchain. It will be absent otherwsie. In XCode theme parlance this is 'Project' vs 'Other'.
 
 
-```public func compilerVersion() -> String```
-```public func protocolVersion() -> String```
+**```public func compilerVersion() -> String```**
 
-Do what you'd expect.
+**```public func protocolVersion() -> String```**
+
+Do what you'd expect :
+
+    // Compiler from XCode 12
+    {
+      "key.version_major": 5,
+      "key.version_minor": 3,
+      "key.version_patch": 0
+    }
+    
+    // sourcekitd protocol version
+    {
+      "key.version_major": 1,
+      "key.version_minor": 0
+    }
 
 
 ## YAML APIs
@@ -150,19 +166,17 @@ Construct YAML queries like this :
 
 
 If you want to work on code that lives on your file system initialize ```SKHipster()``` and use exclusively
-YAML queries though note that your SDK path where you need to supply  **must** be the same as your currently selected
+YAML queries. Note that if you need to supply an SDK path it  **must** be the same as your currently selected
 toolchain.
 
 ## Errors
 
-One of *two things* is going to happen. If SourceKit Hipster fails to locate and link an installed toolchain it will ```fatalError```,
-this shouldn't be too much of a big deal since you needed a toolchain in order to install it.
+One of *two things* is going to happen. If SourceKit Hipster fails to locate and link an installed toolchain it will ```fatalError```
 
-If you get something wrong in your YAML queries you *should* get a (somewhat) helpful error response in your JSON like :
+If you get something wrong in your YAML queries you *should* get an error response from ```sourcekitd``` in your JSON like :
 
     {"error" : "missing 'key.name'"}
 
-These are generated by ```sourcekitd``` and seem to be quite helpful.
 
 
 ## To Do
