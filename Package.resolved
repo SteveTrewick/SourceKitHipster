@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CSourceKitD",
+        "repositoryURL": "https://github.com/SteveTrewick/CSourceKitD.git",
+        "state": {
+          "branch": null,
+          "revision": "f883b505e64f24824c3ef2aee30754f49431be92",
+          "version": "1.0.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
