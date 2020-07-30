@@ -3,7 +3,7 @@ import Foundation
 import CSourceKitD
 
 
-public class SouceKitHipster {
+public class SKHipster {
     
     
     let sdkpath = PlatformConfig.shared.sdk
