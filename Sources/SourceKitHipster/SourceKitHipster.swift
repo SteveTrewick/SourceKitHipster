@@ -26,6 +26,10 @@ public struct SouceKitHipster {
     }
     
     
+    public func shutdown() {
+        dylib.sourcekitd_shutdown()
+    }
+    
     private func error ( _ value: String ) -> String {
         "{\"error\" : \"\(value)\"}"
     }
