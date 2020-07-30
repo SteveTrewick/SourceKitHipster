@@ -9,22 +9,28 @@ public class SKHipster {
     let sdkpath = PlatformConfig.shared.sdk
     
     let file    : URL
-    let source  : String
     let dylib   : SourceKit
     
-    public init ( source: String ) {
-        
-        self.source  = source
-        self.file    = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent("file.swift")
-        self.dylib   = SourceKitHipster.SourceKit()!
-        
-        do { try source.data(using: .utf8)!.write(to: file) }
-        catch {
-            print("error writing file '\(file.path)' : \(error)")
-        }
+    
+    private init (file: URL) {
+        self.file   = file
+        self.dylib  = SourceKitHipster.SourceKit()! // FIXME:
         dylib.sourcekitd_initialize()
     }
     
+    
+    public convenience init ( source: String ) {
+        let tmp = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent("file.swift")
+        do { try source.data(using: .utf8)!.write(to: tmp) }
+        catch {
+            print("error writing file '\(tmp.path)' : \(error)")
+        }
+        self.init(file: tmp)
+    }
+    
+    public convenience init () {
+        self.init( file: URL(fileURLWithPath: "ONLY_VALID_IF_YOU_INIT_WITH_SOURCE"))
+    }
     
     deinit {
         // the only reason ths is a class is so we can do this ...
