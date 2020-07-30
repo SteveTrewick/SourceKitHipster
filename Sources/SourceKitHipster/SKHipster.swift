@@ -29,6 +29,7 @@ public class SKHipster {
     deinit {
         // the only reason ths is a class is so we can do this ...
         dylib.sourcekitd_shutdown()
+        try? FileManager.default.removeItem(at: file)
     }
     
     
