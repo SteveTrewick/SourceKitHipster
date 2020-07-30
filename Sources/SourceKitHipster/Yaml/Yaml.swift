@@ -4,7 +4,8 @@ import Foundation
 
 
 public enum SKKey : String {
-
+    
+    case codecompleteopts     = "key.codecomplete.options"
     case compilerargs         = "key.compilerargs"
     case name                 = "key.name"
     case offset               = "key.offset"
@@ -17,6 +18,7 @@ public enum SKKey : String {
 public enum SKRequestUID : String {
     case editor_open           = "source.request.editor.open"
     case codecomplete          = "source.request.codecomplete"
+    case codecomplete_open     = "source.request.codecomplete.open"
     case cursorinfo            = "source.request.cursorinfo"
     case demangle              = "source.request.demangle"
     case mangle_simple_class   = "source.request.mangle_simple_class"
@@ -42,6 +44,10 @@ public class Yaml {
         return "\"\(string)\""
     }
     
+    
+    public func codecompleteOpts ( _ value: [String] ) -> Self {
+        add(key: .codecompleteopts, value: "[\(value.map {"\"\($0)\""}.joined(separator: ","))]")
+    }
     
     public func compilerArgs ( _ value: [String] ) -> Self {
         add(key: .compilerargs, value: "[\(value.map {"\"\($0)\""}.joined(separator: ","))]")
