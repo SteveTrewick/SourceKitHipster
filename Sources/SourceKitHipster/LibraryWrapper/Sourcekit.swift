@@ -1,24 +1,24 @@
 import Foundation
 import CSourceKitD
 
-internal struct SourceKit {
+internal struct SourceKitD {
     
     let path   = PlatformConfig.shared.sourcekitd
     let handle : UnsafeMutableRawPointer
 
     
-    let sourcekitd_initialize                    : @convention(c) () -> ()
-    let sourcekitd_shutdown                      : @convention(c) () -> ()
-    let sourcekitd_send_request_sync             : @convention(c) (sourcekitd_object_t) -> (sourcekitd_response_t?)
-    let sourcekitd_request_create_from_yaml      : @convention(c) (UnsafePointer<Int8>, UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?) -> (sourcekitd_object_t?)
-    let sourcekitd_response_get_value            : @convention(c) (sourcekitd_response_t) -> (sourcekitd_variant_t)
-    let sourcekitd_variant_json_description_copy : @convention(c) (sourcekitd_variant_t) -> (UnsafeMutablePointer<Int8>?)
-    let sourcekitd_response_is_error             : @convention(c) (sourcekitd_response_t) -> (Bool)
-    let sourcekitd_response_error_get_kind       : @convention(c) (sourcekitd_response_t) -> (sourcekitd_error_t)
-    let sourcekitd_response_error_get_description: @convention(c) (sourcekitd_response_t) -> (UnsafePointer<Int8>?)
-    let sourcekitd_response_dispose              : @convention(c) (sourcekitd_response_t) -> ()
-    let sourcekitd_response_description_dump     : @convention(c) (sourcekitd_response_t) -> ()
-    let sourcekitd_request_description_dump      : @convention(c) (sourcekitd_object_t) -> ()
+    let initialize                    : @convention(c) () -> ()
+    let shutdown                      : @convention(c) () -> ()
+    let send_request_sync             : @convention(c) (sourcekitd_object_t) -> (sourcekitd_response_t?)
+    let request_create_from_yaml      : @convention(c) (UnsafePointer<Int8>, UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?) -> (sourcekitd_object_t?)
+    let response_get_value            : @convention(c) (sourcekitd_response_t) -> (sourcekitd_variant_t)
+    let variant_json_description_copy : @convention(c) (sourcekitd_variant_t) -> (UnsafeMutablePointer<Int8>?)
+    let response_is_error             : @convention(c) (sourcekitd_response_t) -> (Bool)
+    let response_error_get_kind       : @convention(c) (sourcekitd_response_t) -> (sourcekitd_error_t)
+    let response_error_get_description: @convention(c) (sourcekitd_response_t) -> (UnsafePointer<Int8>?)
+    let response_dispose              : @convention(c) (sourcekitd_response_t) -> ()
+    let response_description_dump     : @convention(c) (sourcekitd_response_t) -> ()
+    let request_description_dump      : @convention(c) (sourcekitd_object_t) -> ()
     
     init() {
         
@@ -30,18 +30,18 @@ internal struct SourceKit {
             return unsafeBitCast(imported, to: T.self)
         }
         
-        sourcekitd_initialize                     = load("sourcekitd_initialize")
-        sourcekitd_shutdown                       = load("sourcekitd_shutdown")
-        sourcekitd_send_request_sync              = load("sourcekitd_send_request_sync")
-        sourcekitd_request_create_from_yaml       = load("sourcekitd_request_create_from_yaml")
-        sourcekitd_response_get_value             = load("sourcekitd_response_get_value")
-        sourcekitd_variant_json_description_copy  = load("sourcekitd_variant_json_description_copy")
-        sourcekitd_response_is_error              = load("sourcekitd_response_is_error")
-        sourcekitd_response_error_get_kind        = load("sourcekitd_response_error_get_kind")
-        sourcekitd_response_error_get_description = load("sourcekitd_response_error_get_description")
-        sourcekitd_response_dispose               = load("sourcekitd_response_dispose")
-        sourcekitd_response_description_dump      = load("sourcekitd_response_description_dump")
-        sourcekitd_request_description_dump       = load("sourcekitd_request_description_dump")
+        initialize                     = load("sourcekitd_initialize")
+        shutdown                       = load("sourcekitd_shutdown")
+        send_request_sync              = load("sourcekitd_send_request_sync")
+        request_create_from_yaml       = load("sourcekitd_request_create_from_yaml")
+        response_get_value             = load("sourcekitd_response_get_value")
+        variant_json_description_copy  = load("sourcekitd_variant_json_description_copy")
+        response_is_error              = load("sourcekitd_response_is_error")
+        response_error_get_kind        = load("sourcekitd_response_error_get_kind")
+        response_error_get_description = load("sourcekitd_response_error_get_description")
+        response_dispose               = load("sourcekitd_response_dispose")
+        response_description_dump      = load("sourcekitd_response_description_dump")
+        request_description_dump       = load("sourcekitd_request_description_dump")
     }
     
 }

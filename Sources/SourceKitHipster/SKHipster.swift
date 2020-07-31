@@ -9,13 +9,13 @@ public class SKHipster {
     let sdkpath = PlatformConfig.shared.sdk
     
     let file    : URL
-    let dylib   : SourceKit
+    let dylib   : SourceKitD
     
     
     private init (file: URL) {
         self.file   = file
-        self.dylib  = SourceKitHipster.SourceKit()
-        dylib.sourcekitd_initialize()
+        self.dylib  = SourceKitHipster.SourceKitD()
+        dylib.initialize()
     }
     
     
@@ -34,7 +34,7 @@ public class SKHipster {
     
     deinit {
         // the only reason ths is a class is so we can do this ...
-        dylib.sourcekitd_shutdown()
+        dylib.shutdown()
         try? FileManager.default.removeItem(at: file)
     }
     
@@ -51,16 +51,16 @@ public class SKHipster {
             return error("bad request construction")
         }
         
-        guard let response = dylib.sourcekitd_send_request_sync(request)
+        guard let response = dylib.send_request_sync(request)
         else {
             return error("empty response")
         }
         
-        if true == dylib.sourcekitd_response_is_error(response), let description = dylib.sourcekitd_response_error_get_description(response) {
+        if true == dylib.response_is_error(response), let description = dylib.response_error_get_description(response) {
             return error(String(cString: description))
         }
         
-        guard let json = dylib.sourcekitd_variant_json_description_copy(dylib.sourcekitd_response_get_value(response))
+        guard let json = dylib.variant_json_description_copy(dylib.response_get_value(response))
         else {
             return error("json cnstruction failed")
         }
@@ -71,7 +71,7 @@ public class SKHipster {
     
     public func syntaxMap() -> String {
 
-        let request = dylib.sourcekitd_request_create_from_yaml(
+        let request = dylib.request_create_from_yaml(
             Yaml()
                 .request( .editor_open )
                   .name      ( file.path )
@@ -85,7 +85,7 @@ public class SKHipster {
     
     
     public func cursor ( offset: Int ) -> String {
-        send( request : dylib.sourcekitd_request_create_from_yaml (
+        send( request : dylib.request_create_from_yaml (
             Yaml()
                 .request (.cursorinfo )
                   .offset      ( offset    )
@@ -99,18 +99,18 @@ public class SKHipster {
     
     public func yamlRequest ( yaml : Yaml ) -> String {
         send (
-            request: dylib.sourcekitd_request_create_from_yaml(yaml.string, nil)
+            request: dylib.request_create_from_yaml(yaml.string, nil)
         )
     }
     
     public func yamlrequest ( yaml: String ) -> String {
         send(
-            request : dylib.sourcekitd_request_create_from_yaml(yaml, nil)
+            request : dylib.request_create_from_yaml(yaml, nil)
         )
     }
     
     public func compilerVersion() -> String {
-        send( request: dylib.sourcekitd_request_create_from_yaml (
+        send( request: dylib.request_create_from_yaml (
             Yaml()
                 .request(.compiler_version)
                 .string,
@@ -120,7 +120,7 @@ public class SKHipster {
     
     
     public func protocolVersion() -> String {
-        send( request: dylib.sourcekitd_request_create_from_yaml (
+        send( request: dylib.request_create_from_yaml (
             Yaml()
                 .request(.protocol_version)
                 .string,
